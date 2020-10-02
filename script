@@ -1,0 +1,33 @@
+//Synergism corruptions saver
+//Paste this code to browser console ( F12 or Ctrl+Shift+K to open on Firefox, don't remember Chrome)
+//On Kongregate, you need to right click game and choose "show this frame only" / "open frame in new tab" because browser blocks cross-domain scripting.
+//When using frame view, remember to export game save when exiting to be safe
+//On Github version it works without anything special.
+//type saveCorruptions(); to browser console to save current corruptions
+//type loadCorruptions(); to load saved corruptions
+//script only has one save slot. Saves persist on same browser until localStorage is cleared. (Clearing temp files/cookies)
+
+
+let savedCorruptions = player.usedCorruptions;
+
+function saveCorruptions() {
+	savedCorruptions = player.usedCorruptions;
+	let corruptionsString = JSON.stringify(player.usedCorruptions);
+	localStorage.setItem("savedCorruptions", corruptionsString);
+	console.log("Saved succesfully")
+}
+
+function loadCorruptions() {
+	
+
+	let localSavedCorruptions = localStorage.getItem("savedCorruptions");
+	if (localSavedCorruptions != null) {
+		let corruptionsArray = JSON.parse(localSavedCorruptions);
+		player.prototypeCorruptions = corruptionsArray;
+		player.savedCorruptions = corruptionsArray;
+		console.log("Loaded succesfully.");
+	} else {
+		console.log("No saved corruptions");
+	}
+	
+}
